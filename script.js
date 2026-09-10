@@ -129,6 +129,16 @@ function renderExpenses() {
     }
 
     // Table rows, respecting the active filter and sort
+    let highestIndex = null;
+    let highestAmount = 0;
+
+    expenses.forEach(function (expense, index) {
+        if (expense.amount > highestAmount) {
+            highestAmount = expense.amount;
+            highestIndex = index;
+        }
+    });
+
     let visible = expenses
         .map(function (expense, index) { return { expense: expense, index: index }; })
         .filter(function (item) {
@@ -164,7 +174,8 @@ function renderExpenses() {
 
         let row = tableBody.insertRow();
 
-        row.insertCell(0).innerHTML = expense.description;
+        row.insertCell(0).innerHTML = expense.description +
+            (index === highestIndex ? ' <span class="badge">Highest</span>' : '');
 
         let amountCell = row.insertCell(1);
         amountCell.className = "table__amt";
