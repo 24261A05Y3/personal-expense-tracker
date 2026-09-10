@@ -99,6 +99,11 @@ function renderExpenses() {
 
     document.getElementById("total").innerHTML = total.toFixed(2).replace(/\.00$/, "");
 
+    // Entry count, shown alongside the total figure
+    let entryCount = expenses.length;
+    document.getElementById("totalCount").innerHTML =
+        entryCount + (entryCount === 1 ? " entry" : " entries");
+
     // Category breakdown bars
     let breakdownRows = document.getElementById("breakdownRows");
     let breakdown = document.getElementById("breakdown");
