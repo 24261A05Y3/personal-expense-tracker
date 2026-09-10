@@ -59,6 +59,28 @@ function addExpense() {
 
     document.getElementById("description").value = "";
     document.getElementById("amount").value = "";
+
+    filterExpenses();
+}
+
+function filterExpenses() {
+
+    let selectedCategory =
+        document.getElementById("filterCategory").value;
+
+    let rows =
+        document.getElementById("expenseList").rows;
+
+    for (let i = 0; i < rows.length; i++) {
+
+        let rowCategory = rows[i].cells[2].innerHTML;
+
+        if (selectedCategory === "All" || rowCategory === selectedCategory) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
 }
 
 function editExpense(button) {

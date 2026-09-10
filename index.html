@@ -29,6 +29,16 @@
 
     <h2>Total Expense: ₹<span id="total">0</span></h2>
 
+    <label for="filterCategory">Filter by Category:</label>
+    <select id="filterCategory" onchange="filterExpenses()">
+        <option value="All">All</option>
+        <option value="Food">Food</option>
+        <option value="Travel">Travel</option>
+        <option value="Education">Education</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Other">Other</option>
+    </select>
+
     <table>
 
         <tr>
