@@ -285,6 +285,22 @@ body {
     border-bottom: 2px solid var(--rule-strong);
 }
 
+.table thead th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.table thead th.sortable:hover {
+    color: var(--ink);
+}
+
+.sort-indicator {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 10px;
+    color: var(--green);
+}
+
 .table__amt,
 .table__act {
     text-align: right;

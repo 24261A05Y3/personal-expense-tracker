@@ -1,6 +1,7 @@
 let expenses = [];
 let editingIndex = null;
 let currentFilter = "All";
+let currentSort = { column: null, direction: "asc" };
 
 const CATEGORIES = ["Food", "Travel", "Education", "Shopping", "Other"];
 
@@ -57,6 +58,31 @@ function setFilter(category) {
     renderExpenses();
 }
 
+function setSort(column) {
+
+    if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === "asc" ? "desc" : "asc";
+    } else {
+        currentSort.column = column;
+        currentSort.direction = "asc";
+    }
+
+    renderExpenses();
+}
+
+function updateSortIndicators() {
+
+    ["description", "amount", "category"].forEach(function (column) {
+        let indicator = document.getElementById("sort-" + column);
+
+        if (currentSort.column === column) {
+            indicator.innerHTML = currentSort.direction === "asc" ? "▲" : "▼";
+        } else {
+            indicator.innerHTML = "";
+        }
+    });
+}
+
 function renderExpenses() {
 
     let tableBody = document.getElementById("expenseList");
@@ -102,14 +128,37 @@ function renderExpenses() {
         });
     }
 
-    // Table rows, respecting the active filter
+    // Table rows, respecting the active filter and sort
+    let visible = expenses
+        .map(function (expense, index) { return { expense: expense, index: index }; })
+        .filter(function (item) {
+            return currentFilter === "All" || item.expense.category === currentFilter;
+        });
+
+    if (currentSort.column) {
+        let column = currentSort.column;
+        let direction = currentSort.direction === "asc" ? 1 : -1;
+
+        visible.sort(function (a, b) {
+            let valA = a.expense[column];
+            let valB = b.expense[column];
+
+            if (typeof valA === "string") {
+                return valA.localeCompare(valB) * direction;
+            }
+
+            return (valA - valB) * direction;
+        });
+    }
+
+    updateSortIndicators();
+
     let visibleCount = 0;
 
-    expenses.forEach(function (expense, index) {
+    visible.forEach(function (item) {
 
-        if (currentFilter !== "All" && expense.category !== currentFilter) {
-            return;
-        }
+        let expense = item.expense;
+        let index = item.index;
 
         visibleCount++;
 

@@ -84,9 +84,15 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="table__desc">Description</th>
-                                <th class="table__amt">Amount</th>
-                                <th class="table__cat">Category</th>
+                                <th class="table__desc sortable" onclick="setSort('description')">
+                                    Description<span class="sort-indicator" id="sort-description"></span>
+                                </th>
+                                <th class="table__amt sortable" onclick="setSort('amount')">
+                                    Amount<span class="sort-indicator" id="sort-amount"></span>
+                                </th>
+                                <th class="table__cat sortable" onclick="setSort('category')">
+                                    Category<span class="sort-indicator" id="sort-category"></span>
+                                </th>
                                 <th class="table__act"></th>
                             </tr>
                         </thead>
