@@ -1,4 +1,5 @@
 let total = 0;
+let editingRow = null; // holds reference to the row currently being edited
 
 function addExpense() {
 
@@ -16,30 +17,60 @@ function addExpense() {
         return;
     }
 
-    let table =
-        document.getElementById("expenseList");
+    if (editingRow) {
+        // Update mode: apply changes to the row being edited
+        let oldAmount = Number(editingRow.dataset.amount);
 
-    let row = table.insertRow();
+        editingRow.cells[0].innerHTML = description;
+        editingRow.cells[1].innerHTML = "₹" + amount;
+        editingRow.cells[2].innerHTML = category;
+        editingRow.dataset.amount = amount;
 
-    row.insertCell(0).innerHTML = description;
+        total = total - oldAmount + amount;
+        document.getElementById("total").innerHTML = total;
 
-    row.insertCell(1).innerHTML = "₹" + amount;
+        editingRow = null;
+        document.getElementById("addBtn").innerHTML = "Add Expense";
+    } else {
+        // Normal add mode
+        let table =
+            document.getElementById("expenseList");
 
-    row.insertCell(2).innerHTML = category;
+        let row = table.insertRow();
+        row.dataset.amount = amount;
 
-    let deleteCell = row.insertCell(3);
+        row.insertCell(0).innerHTML = description;
 
-    deleteCell.innerHTML =
-        '<button onclick="deleteExpense(this,' +
-        amount + ')">Delete</button>';
+        row.insertCell(1).innerHTML = "₹" + amount;
 
-    total = total + amount;
+        row.insertCell(2).innerHTML = category;
 
-    document.getElementById("total").innerHTML = total;
+        let actionCell = row.insertCell(3);
+
+        actionCell.innerHTML =
+            '<button onclick="editExpense(this)">Edit</button> ' +
+            '<button onclick="deleteExpense(this,' +
+            amount + ')">Delete</button>';
+
+        total = total + amount;
+
+        document.getElementById("total").innerHTML = total;
+    }
 
     document.getElementById("description").value = "";
-
     document.getElementById("amount").value = "";
+}
+
+function editExpense(button) {
+
+    let row = button.parentElement.parentElement;
+
+    document.getElementById("description").value = row.cells[0].innerHTML;
+    document.getElementById("amount").value = Number(row.dataset.amount);
+    document.getElementById("category").value = row.cells[2].innerHTML;
+
+    editingRow = row;
+    document.getElementById("addBtn").innerHTML = "Update Expense";
 }
 
 function deleteExpense(button, amount) {
