@@ -1,105 +1,163 @@
-let total = 0;
-let editingRow = null; // holds reference to the row currently being edited
+let expenses = [];
+let editingIndex = null;
+let currentFilter = "All";
+
+const CATEGORIES = ["Food", "Travel", "Education", "Shopping", "Other"];
+
+window.onload = function () {
+    let saved = localStorage.getItem("expenses");
+
+    if (saved) {
+        expenses = JSON.parse(saved);
+    }
+
+    renderExpenses();
+};
+
+function saveExpenses() {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+}
 
 function addExpense() {
 
-    let description =
-        document.getElementById("description").value;
-
-    let amount =
-        Number(document.getElementById("amount").value);
-
-    let category =
-        document.getElementById("category").value;
+    let description = document.getElementById("description").value.trim();
+    let amount = Number(document.getElementById("amount").value);
+    let category = document.getElementById("category").value;
 
     if (description === "" || amount <= 0) {
         alert("Please enter valid details");
         return;
     }
 
-    if (editingRow) {
-        // Update mode: apply changes to the row being edited
-        let oldAmount = Number(editingRow.dataset.amount);
+    if (editingIndex !== null) {
+        expenses[editingIndex].description = description;
+        expenses[editingIndex].amount = amount;
+        expenses[editingIndex].category = category;
 
-        editingRow.cells[0].innerHTML = description;
-        editingRow.cells[1].innerHTML = "₹" + amount;
-        editingRow.cells[2].innerHTML = category;
-        editingRow.dataset.amount = amount;
-
-        total = total - oldAmount + amount;
-        document.getElementById("total").innerHTML = total;
-
-        editingRow = null;
-        document.getElementById("addBtn").innerHTML = "Add Expense";
+        editingIndex = null;
+        document.getElementById("addBtn").innerHTML = "Add expense";
     } else {
-        // Normal add mode
-        let table =
-            document.getElementById("expenseList");
-
-        let row = table.insertRow();
-        row.dataset.amount = amount;
-
-        row.insertCell(0).innerHTML = description;
-
-        row.insertCell(1).innerHTML = "₹" + amount;
-
-        row.insertCell(2).innerHTML = category;
-
-        let actionCell = row.insertCell(3);
-
-        actionCell.innerHTML =
-            '<button onclick="editExpense(this)">Edit</button> ' +
-            '<button onclick="deleteExpense(this,' +
-            amount + ')">Delete</button>';
-
-        total = total + amount;
-
-        document.getElementById("total").innerHTML = total;
+        expenses.push({ description: description, amount: amount, category: category });
     }
 
     document.getElementById("description").value = "";
     document.getElementById("amount").value = "";
 
-    filterExpenses();
+    saveExpenses();
+    renderExpenses();
 }
 
-function filterExpenses() {
+function setFilter(category) {
+    currentFilter = category;
 
-    let selectedCategory =
-        document.getElementById("filterCategory").value;
+    document.querySelectorAll(".chip").forEach(function (chip) {
+        chip.classList.toggle("chip--active", chip.dataset.category === category);
+    });
 
-    let rows =
-        document.getElementById("expenseList").rows;
+    renderExpenses();
+}
 
-    for (let i = 0; i < rows.length; i++) {
+function renderExpenses() {
 
-        let rowCategory = rows[i].cells[2].innerHTML;
+    let tableBody = document.getElementById("expenseList");
+    tableBody.innerHTML = "";
 
-        if (selectedCategory === "All" || rowCategory === selectedCategory) {
-            rows[i].style.display = "";
-        } else {
-            rows[i].style.display = "none";
-        }
+    let total = 0;
+    let categoryTotals = {};
+    CATEGORIES.forEach(function (cat) { categoryTotals[cat] = 0; });
+
+    expenses.forEach(function (expense) {
+        total += expense.amount;
+        categoryTotals[expense.category] = (categoryTotals[expense.category] || 0) + expense.amount;
+    });
+
+    document.getElementById("total").innerHTML = total.toFixed(2).replace(/\.00$/, "");
+
+    // Category breakdown bars
+    let breakdownRows = document.getElementById("breakdownRows");
+    let breakdown = document.getElementById("breakdown");
+    breakdownRows.innerHTML = "";
+
+    let maxCategory = Math.max(1, ...Object.values(categoryTotals));
+
+    if (total === 0) {
+        breakdown.style.display = "none";
+    } else {
+        breakdown.style.display = "block";
+
+        CATEGORIES.forEach(function (cat) {
+            let amt = categoryTotals[cat];
+            if (amt === 0) return;
+
+            let pct = (amt / maxCategory) * 100;
+
+            let row = document.createElement("div");
+            row.className = "breakdown__row";
+            row.innerHTML =
+                '<span class="breakdown__name">' + cat + '</span>' +
+                '<span class="breakdown__track"><span class="breakdown__fill" style="width:' + pct + '%"></span></span>' +
+                '<span class="breakdown__value">₹' + amt.toFixed(2).replace(/\.00$/, "") + '</span>';
+
+            breakdownRows.appendChild(row);
+        });
     }
+
+    // Table rows, respecting the active filter
+    let visibleCount = 0;
+
+    expenses.forEach(function (expense, index) {
+
+        if (currentFilter !== "All" && expense.category !== currentFilter) {
+            return;
+        }
+
+        visibleCount++;
+
+        let row = tableBody.insertRow();
+
+        row.insertCell(0).innerHTML = expense.description;
+
+        let amountCell = row.insertCell(1);
+        amountCell.className = "table__amt";
+        amountCell.innerHTML = "₹" + expense.amount.toFixed(2).replace(/\.00$/, "");
+
+        let categoryCell = row.insertCell(2);
+        categoryCell.className = "table__cat";
+        categoryCell.innerHTML = expense.category;
+
+        let actionCell = row.insertCell(3);
+        actionCell.className = "table__act";
+        actionCell.innerHTML =
+            '<button class="row-btn" onclick="editExpense(' + index + ')">Edit</button>' +
+            '<button class="row-btn row-btn--delete" onclick="deleteExpense(' + index + ')">Delete</button>';
+    });
+
+    document.getElementById("emptyState").style.display = visibleCount === 0 ? "block" : "none";
 }
 
-function editExpense(button) {
+function editExpense(index) {
 
-    let row = button.parentElement.parentElement;
+    let expense = expenses[index];
 
-    document.getElementById("description").value = row.cells[0].innerHTML;
-    document.getElementById("amount").value = Number(row.dataset.amount);
-    document.getElementById("category").value = row.cells[2].innerHTML;
+    document.getElementById("description").value = expense.description;
+    document.getElementById("amount").value = expense.amount;
+    document.getElementById("category").value = expense.category;
 
-    editingRow = row;
-    document.getElementById("addBtn").innerHTML = "Update Expense";
+    editingIndex = index;
+    document.getElementById("addBtn").innerHTML = "Update expense";
+
+    document.getElementById("description").focus();
 }
 
-function deleteExpense(button, amount) {
+function deleteExpense(index) {
 
-    button.parentElement.parentElement.remove();
+    expenses.splice(index, 1);
 
-    total = total - amount;
+    if (editingIndex === index) {
+        editingIndex = null;
+        document.getElementById("addBtn").innerHTML = "Add expense";
+    }
 
-    document.getElementById("total").innerHTML = total;
+    saveExpenses();
+    renderExpenses();
 }
