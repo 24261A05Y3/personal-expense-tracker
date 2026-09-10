@@ -322,6 +322,18 @@ body {
     color: var(--red);
 }
 
+.badge {
+    display: inline-block;
+    font-size: 9.5px;
+    letter-spacing: 0.02em;
+    padding: 2px 7px;
+    margin-left: 6px;
+    background: var(--red);
+    color: var(--sheet);
+    border-radius: 999px;
+    vertical-align: middle;
+}
+
 .table__cat {
     color: var(--ink-soft);
 }
