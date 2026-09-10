@@ -1,60 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Personal Expense Tracker</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Ledger</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container">
+<div class="page">
 
-    <h1>My Personal Expense Tracker</h1>
+    <div class="ledger">
 
-    <input type="text" id="description"
-           placeholder="Expense Description">
+        <div class="ledger__stack"></div>
+        <div class="ledger__stack ledger__stack--back"></div>
 
-    <input type="number" id="amount"
-           placeholder="Amount">
+        <div class="sheet">
 
-    <select id="category">
-        <option>Food</option>
-        <option>Travel</option>
-        <option>Education</option>
-        <option>Shopping</option>
-        <option>Other</option>
-    </select>
+            <header class="sheet__header">
+                <div class="sheet__perf" aria-hidden="true"></div>
+                <div class="sheet__heading">
+                    <p class="sheet__kicker">Personal accounts</p>
+                    <h1 class="sheet__title">Expense Ledger</h1>
+                </div>
+                <div class="sheet__total">
+                    <span class="sheet__total-label">Balance out</span>
+                    <span class="sheet__total-figure">₹<span id="total">0</span></span>
+                </div>
+            </header>
 
-    <button id="addBtn" onclick="addExpense()">Add Expense</button>
+            <div class="sheet__body">
 
-    <h2>Total Expense: ₹<span id="total">0</span></h2>
+                <aside class="entry">
 
-    <label for="filterCategory">Filter by Category:</label>
-    <select id="filterCategory" onchange="filterExpenses()">
-        <option value="All">All</option>
-        <option value="Food">Food</option>
-        <option value="Travel">Travel</option>
-        <option value="Education">Education</option>
-        <option value="Shopping">Shopping</option>
-        <option value="Other">Other</option>
-    </select>
+                    <div class="entry__block">
+                        <h2 class="entry__title">New entry</h2>
 
-    <table>
+                        <label class="field">
+                            <span class="field__label">Description</span>
+                            <input type="text" id="description" placeholder="What was it for?">
+                        </label>
 
-        <tr>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Action</th>
-        </tr>
+                        <label class="field">
+                            <span class="field__label">Amount</span>
+                            <input type="number" id="amount" placeholder="0.00">
+                        </label>
 
-        <tbody id="expenseList"></tbody>
+                        <label class="field">
+                            <span class="field__label">Category</span>
+                            <select id="category">
+                                <option>Food</option>
+                                <option>Travel</option>
+                                <option>Education</option>
+                                <option>Shopping</option>
+                                <option>Other</option>
+                            </select>
+                        </label>
 
-    </table>
+                        <button id="addBtn" class="entry__submit" onclick="addExpense()">Add expense</button>
+                    </div>
+
+                    <div class="entry__block">
+                        <h2 class="entry__title">Filter by category</h2>
+                        <div class="chips" id="filterChips">
+                            <button class="chip chip--active" data-category="All" onclick="setFilter('All')">All</button>
+                            <button class="chip" data-category="Food" onclick="setFilter('Food')">Food</button>
+                            <button class="chip" data-category="Travel" onclick="setFilter('Travel')">Travel</button>
+                            <button class="chip" data-category="Education" onclick="setFilter('Education')">Education</button>
+                            <button class="chip" data-category="Shopping" onclick="setFilter('Shopping')">Shopping</button>
+                            <button class="chip" data-category="Other" onclick="setFilter('Other')">Other</button>
+                        </div>
+                    </div>
+
+                </aside>
+
+                <section class="record">
+
+                    <div class="breakdown" id="breakdown">
+                        <h2 class="entry__title">By category</h2>
+                        <div class="breakdown__rows" id="breakdownRows"></div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="table__desc">Description</th>
+                                <th class="table__amt">Amount</th>
+                                <th class="table__cat">Category</th>
+                                <th class="table__act"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="expenseList"></tbody>
+                    </table>
+
+                    <p class="empty" id="emptyState">No entries yet — add your first expense on the left.</p>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
