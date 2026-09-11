@@ -4,7 +4,7 @@ LIVE DEMO- https://personalexpensetrackerdevops.netlify.app
 
 A single-page expense tracker styled like a paper ledger sheet. Add, edit, filter, and sort expenses, with a running total, per-category breakdown, and entry count — all saved locally in the browser.
 
-## Features
+## Features  
 
 - **Add expenses** with a description, amount, and category.
 - **Edit or delete** any entry from the table.  
@@ -25,7 +25,7 @@ A single-page expense tracker styled like a paper ledger sheet. Add, edit, filte
 | `script.js`   | App logic — state, rendering,  filtering, sorting, storage |
 
 ## Getting Started
-
+       
 No build step or server required...  
 
 1. Keep all three files (`index.html`, `style.css`, `script.js`) in the same folder.
