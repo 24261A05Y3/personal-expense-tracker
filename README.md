@@ -27,7 +27,7 @@ A single-page expense tracker styled like a paper ledger sheet. Add, edit, filte
 ## Getting Started
        
 No build step or server required...  
-
+  
 1. Keep all three files (`index.html`, `style.css`, `script.js`) in the same folder.
 2. Open `index.html` in a web browser.
 
