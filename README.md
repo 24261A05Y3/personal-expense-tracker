@@ -51,7 +51,7 @@ All expenses are stored in the browser's `localStorage` under the key `expenses`
 
 Because storage is per-browser and per-device, data does not sync across devices and will be lost if browser storage is cleared.
 
-## Currency
+## Currencyy
 
 Amounts are displayed in Indian Rupees (₹). To use a different currency, replace the `₹` symbol in `index.html` and `script.js`.
 
@@ -59,7 +59,7 @@ Amounts are displayed in Indian Rupees (₹). To use a different currency, repla
 
 Works in any modern browser (Chrome, Firefox, Safari, Edge) with JavaScript and `localStorage` enabled.
 
-## Customization
+## Customizationnn
 
 - **Categories**: edit the `CATEGORIES` array in `script.js` and the matching `<option>` / chip elements in `index.html`.
 - **Theme colors and fonts**: adjust the CSS custom properties at the top of `style.css` (`:root` block).
