@@ -10,7 +10,7 @@ A single-page expense tracker styled like a paper ledger sheet. Add, edit, filte
 - **Edit or delete** any entry from the table.  
 - **Filter by category** using the chip buttons (All, Food, Travel, Education, Shopping, Other).
 - **Sort** the table by description, amount, or category (click a column header; click again to reverse direction).
-- **Category breakdown** — a bar for each category showing its share of total spend.
+- **Category breakdown** — a bar for each category showing its share of total spend.  
 - **Balance out total** — the sum of all expenses, shown at the top.  
 - **Entry count** — the total number of expenses ("N entries"), shown alongside the total.
 - **Highest expense badge** — automatically flags the largest single expense in the table.
