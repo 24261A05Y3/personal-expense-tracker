@@ -4,7 +4,7 @@ let currentFilter = "All";
 let currentSort = { column: null, direction: "asc" };
 
 const CATEGORIES = ["Food", "Travel", "Education", "Shopping", "Other"];
-
+// This is the javascript file of personal expense tracker
 window.onload = function () {
     let saved = localStorage.getItem("expenses");
 
