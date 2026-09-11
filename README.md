@@ -43,13 +43,13 @@ That's it — the app runs entirely client-side...
 
 ## Data Storage
 
-All expenses are stored in the browser's `localStorage` under the key `expenses`, as a JSON array of objects:
+All expenses are stored in the  browser's `localStorage` under the key `expenses`, as a JSON array of objects:
 
 ```json
 { "description": "Groceries", "amount": 850, "category": "Food" }
 ```
 
-Because storage is per-browser and per-device, data does not sync across devices and will be lost if browser storage is cleared.
+Because storage is   per-browser and per-device, data does not sync across devices and will be lost if browser storage is cleared.
 
 ## Currencyy
 
