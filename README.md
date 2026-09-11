@@ -55,7 +55,7 @@ Because storage is  per-browser and per-device, data does not sync across device
 
 Amounts are displayed in Indian Rupees (₹). To use a different currency, replace the `₹` symbol in `index.html` and `script.js`.
 
-## Browser Support
+## Browser Support  
 
 Works in any modern browser (Chrome, Firefox, Safari, Edge) with JavaScript and `localStorage` enabled.
 
