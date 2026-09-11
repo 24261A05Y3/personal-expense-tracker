@@ -7,7 +7,7 @@ A single-page expense tracker styled like a paper ledger sheet. Add, edit, filte
 ## Features
 
 - **Add expenses** with a description, amount, and category.
-- **Edit or delete** any entry from the table.
+- **Edit or delete** any entry from the table.  
 - **Filter by category** using the chip buttons (All, Food, Travel, Education, Shopping, Other).
 - **Sort** the table by description, amount, or category (click a column header; click again to reverse direction).
 - **Category breakdown** — a bar for each category showing its share of total spend.
@@ -22,7 +22,7 @@ A single-page expense tracker styled like a paper ledger sheet. Add, edit, filte
 |---------------|-------------------------------------------------------|
 | `index.html`  | Page structure and layout                             |
 | `style.css`   | Visual styling (paper-ledger theme, fonts, colors)     |
-| `script.js`   | App logic — state, rendering, filtering, sorting, storage |
+| `script.js`   | App logic — state, rendering,  filtering, sorting, storage |
 
 ## Getting Started
 
