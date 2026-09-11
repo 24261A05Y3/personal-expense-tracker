@@ -49,8 +49,8 @@ All expenses are stored in the  browser's `localStorage` under the key `expenses
 { "description": "Groceries", "amount": 850, "category": "Food" }
 ```
 
-Because storage is   per-browser and per-device, data does not sync across devices and will be lost if browser storage is cleared.
-
+Because storage is  per-browser and per-device, data does not sync across devices and will be lost if browser storage is cleared.
+  
 ## Currencyy
 
 Amounts are displayed in Indian Rupees (₹). To use a different currency, replace the `₹` symbol in `index.html` and `script.js`.
