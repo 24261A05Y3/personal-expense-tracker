@@ -6,7 +6,7 @@ A single-page expense tracker styled like a paper ledger sheet. Add, edit, filte
 
 ## Features  
 
-- **Add expenses** with a description, amount, and category.
+- **Add expenses** with a description, amount, and category.  
 - **Edit or delete** any entry from the table.  
 - **Filter by category** using the chip buttons (All, Food, Travel, Education, Shopping, Other).
 - **Sort** the table by description, amount, or category (click a column header; click again to reverse direction).
